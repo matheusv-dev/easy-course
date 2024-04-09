@@ -2,6 +2,10 @@ $(document).ready(function () {
   loadData();
 });
 
+/*
+ * @params string API_URL - constante da URL da API
+ * @params string API_KEY - constante da API key
+ */
 const API_URL = "https://api.easycourse.com.br/teste_pratico/";
 const API_KEY = "dGVzdGUgcHJhdGljbw==";
 
@@ -19,24 +23,36 @@ async function loadData() {
       positions.push({ ...pos });
     });
 
-    initMap(positions);
+    initializeMap(positions);
   });
 
   return positions;
 }
 
-function generateInfoWindow(data) {
+/*
+ * @@@ recebe as informações de imei e data para exibir ao clicar
+ * @params string imei
+ * @params string data
+ * @return string
+ */
+function generateInfoWindow(imei, data) {
   return `<div> 
             <span class='bold'>IMEI: </span>
-            <span>${data.imei}</span>
+            <span>${imei}</span>
           </div>
           <div> 
             <span class='bold'>Data:</span>
-            <span>${data.last_stamp}</span>
+            <span>${data}</span>
           </div>`;
 }
 
-async function initMap(locations) {
+/*
+ * @@@ recebe as informações de localizacao retornadas da API
+ * @@@ e gera visualmente as posições no mapa
+ * @params array locations
+ * @return void
+ */
+async function initializeMap(locations) {
   const { Map } = await google.maps.importLibrary("maps");
   const { AdvancedMarkerElement } = await google.maps.importLibrary("marker");
 
@@ -54,7 +70,7 @@ async function initMap(locations) {
   });
 
   const markers = locations.map((position, i) => {
-    const content = generateInfoWindow(position);
+    const content = generateInfoWindow(position.imei, position.last_stamp);
 
     const marker = new google.maps.marker.AdvancedMarkerElement({
       position: { lat: Number(position.latitude), lng: Number(position.longitude) },
