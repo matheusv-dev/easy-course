@@ -2,6 +2,16 @@ $(document).ready(function () {
   loadData();
 });
 
+/**
+ * Para que o sistema atualize e pegue posições em tempo real
+ * Foi utilizado setInterval que irá a cada X segundos
+ * Consultar novamente a API
+ */
+
+setInterval(() => {
+  loadData()
+}, 5000)
+
 /*
  * @params string API_URL - constante da URL da API
  * @params string API_KEY - constante da API key
@@ -59,7 +69,7 @@ async function initializeMap(locations) {
   const firstPosition = locations[0];
 
   var map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 5,
+    zoom: 12,
     center: { lat: Number(firstPosition.latitude), lng: Number(firstPosition.longitude) },
     mapTypeId: "roadmap",
     mapId: "DEMO_MAP_ID",
