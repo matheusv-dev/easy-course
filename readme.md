@@ -4,4 +4,4 @@
 > 
 > Consumindo api do google maps utilizando CDN
 >
-> 
+> Utilizando apenas JS e HTML
